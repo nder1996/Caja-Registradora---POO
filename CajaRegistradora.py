@@ -10,7 +10,7 @@ class Producto:
         
         
     def Validar_P(self):
-        if self.Item!=0:
+        if self.Item!=0 and self.Atributo!="":
             Punto = int(self.Atributo.find("."))
             if len(self.Atributo)>Punto+1 or Punto==-1:
                 if self.Atributo.count(".")<=1:                   
@@ -23,7 +23,7 @@ class Producto:
                         else:
                             return True
                             sys.exit(0)
-        else: 
+        if self.Item == 0 and self.Atributo!="": 
             if self.Atributo.isdigit()==True:
                 return True
                 sys.exit(0)
@@ -32,36 +32,31 @@ class Producto:
         Pedido = "\n\n|| {} UNIDADES DE {} TIENE UN DESCUENTO DE {} % \n\n|| SUB-TOTAL A PAGAR ES $ {} USD".format(self.Articulo[1],self.Articulo[2],self.Articulo[4],self.Sub_Total[len(self.Sub_Total)-1])
         self.Compra_Total.append(Pedido)
         self.Articulo.clear()
-        return self.Compra_Total
-    
-    def Sub_Total(self):
-        return self.Sub_Total        
-class Escaner():
-    def __init__(self,Total,Eliminar_Articulo,Sub_Total,Compra_Total):
+
+class Escaner:
+    def __init__(self,Total,Sub_Total,Compra_Total):
         self.Total              = Total
-        self.Eliminar_Articulo  = Eliminar_Articulo
         self.Sub_Total          = Sub_Total
         self.Compra_Total       = Compra_Total
         
-        
     def Mostrar_Pedido(self):
         Contador = 0
-        print("SUB TOTAL : {} -  - Productos : {} - Eliminar_Item : {} ".format(self.Sub_Total,self.Total,self.Eliminar_Articulo))
         for i in self.Compra_Total:
             Contador+=1
-            print("\nPRODUCTO : ",Contador,"\n\n",i)
+            print("\n\nPRODUCTO : ",Contador,"\n",i)
         
     def Total_Pedido(self):
         for i in range(len(self.Sub_Total)):
             self.Total = self.Total + float(self.Sub_Total[i])
         return self.Total
-    
-    def Validar_Item_ELiminado(self):
+ 
+    def Validar_Item_ELiminado(self,Eliminar):
         if self.Item!="0":
-            if int(self.Item) <= len(self.Compra_Total):
-                self.Eliminar_Articulo = self.Eliminar_Articulo - 1
-                self.Compra_Total.pop(int(self.Eliminar_Articulo))
-                sys.exit(0)
+            if Eliminar.isdigit()==True:
+                if int(self.Item) <= len(self.Compra_Total):
+                    Eliminar   = Eliminar - 1
+                    self.Compra_Total.pop(int(Eliminar))
+                    sys.exit(0)
         return False
 
 class Pantalla_Principal:
@@ -86,7 +81,7 @@ class Pantalla_Principal:
         print("\n\t\t\t\t      *|* \n")  
 
     def Articulo_C(self):
-        print("\n\n\n\t\t\t| PRODUCTO AGREGADO CON EXITO |")
+        print("\n\n\t\t\t| PRODUCTO AGREGADO CON EXITO |")
         print("\n\t\t\t\t      *|* \n")  
     
     def Articulo_F(self):
@@ -94,7 +89,7 @@ class Pantalla_Principal:
         print("\n\t\t\t\t      *|* \n")
     
     def Agregado_P(self):
-        print("\n\n\n\t\t\t    | PRODUCTOS AGREGADOS|")
+        print("\n\t\t\t    | PRODUCTOS AGREGADOS|")
         print("\n\n")
         
     def Total(self,Total):
@@ -104,42 +99,61 @@ class Pantalla_Principal:
 
 Articulos= [] ;Total_Compra = [] ; Item = [] ; Atributo = "" ; Sub_Total = [] ; Total_Precio = 0.0 ; Eliminar = "-1" ; Stop="0"
 
-Menu = Pantalla_Principal("Encendido") ; Producto_Cliente = Producto(-1,"",[],[],[]) ; Escaner_Producto =  Escaner([],0,[],[])
+Menu = Pantalla_Principal("Encendido") ; Producto_Cliente = Producto(-1,"",[],[],[]) ; Escaner_Producto =  Escaner(0.0,[],[])
 
 while Stop!="-1":
+    sys.stdout.flush()
+    time.sleep(1.5)
     os.system ("cls")
     Menu.Inicio()
-    if len(Total_Compra) != 0: Escaner_Producto.Mostrar_Pedido() 
+    if len(Total_Compra) != 0:  Menu.Agregado_P() ; Escaner_Producto.Mostrar_Pedido() 
+    Menu.Instruccion_P()
     Codigo    = input("\nIngrese El Codigo Del Producto : ")  
     N_Unidad  = input("\nIngrese El Numero De Unidades (Numeros Enteros) Del Producto : ")
     Producto_Cliente = Producto(0,N_Unidad,[],[],[])
-    if Producto_Cliente.Validar_P() !=True: Menu.Error_P()
+    if Producto_Cliente.Validar_P() !=True: Menu.Error_P() ; time.sleep(1)
     else:
         Name_Producto = input("\nIngrese El Nombre Del Producto : ")
         Valor         = input("\nIngrese El Valor Del Producto x Unidad : $ ")
         Producto_Cliente = Producto(1,Valor,[],[],[]) 
-        if Producto_Cliente.Validar_P() !=True: Menu.Error_P()
+        if Producto_Cliente.Validar_P() !=True: Menu.Error_P() ; time.sleep(1)
         else:
             Descuento  = input("\nIngrese El Porcentaje Del Descuento Si Existe : ")
             Producto_Cliente = Producto(2,Descuento,[],[],[])
-            if Producto_Cliente.Validar_P() !=True: Menu.Error_P()
-            else:
+            if Producto_Cliente.Validar_P() !=True: Menu.Error_P() ; time.sleep(1)
+            else:            
                 Articulos.append(Codigo) ; Articulos.append(N_Unidad) ; Articulos.append(Name_Producto) ; Articulos.append(Valor) ; Articulos.append(Descuento)
-                Sub_Total.append((int(N_Unidad) * int(Valor)) - ((float(Descuento)/100) * (int(N_Unidad) * int(Valor))))
+                Sub_Total.append((int(N_Unidad) * float(Valor)) - ((float(Descuento)/100) * (int(N_Unidad) * float(Valor))))
                 Producto_Cliente = Producto(-1,"",Sub_Total,Articulos,Total_Compra)
-                Compra_Total = Producto_Cliente.Crear_Producto() ; Sub_Total = Producto_Cliente.Sub_Total()
-                print("SUB TOTAL : {} -  - Productos : {} - Eliminar_Item : {} ".format(Sub_Total,Total_Precio,Eliminar))
-                time.sleep(10)
-                #Escaner_Produto =  Escaner(Total_Precio,"-1",Sub_Total,Total_Compra)
-                #Escaner_Producto.Mostrar_Pedido()
-                #time.sleep(3)
+                Producto_Cliente.Crear_Producto() 
+                Escaner_Producto =  Escaner(Total_Precio,Sub_Total,Total_Compra)
+                Total_Precio = Escaner_Producto.Total_Pedido()
+    Stop = input("\n\t\tIngrese El Numero -1 Si Desea Terminar El Pedido : ")
+
+sys.stdout.flush()
+time.sleep(1.5)    
+Menu.Articulo_F()
+Menu.Agregado_P()
+    
+    
+    
+    
+#Eliminar = input("\nPARA CONTINUAR INGRESE 0 , PARA ELIMINAR UN ARTICULO INGRESE EL NUMERO DEL ARTICULO : ")
+
+
+
+"""
+
+Escaner_Producto =  Escaner(Total_Precio,Eliminar,Sub_Total,Total_Compra)
+if Escaner_Producto.Validar_Item_ELiminado()==False:
+    while Eliminar!=0:
+        Eliminar = input("\nPARA CONTINUAR INGRESE 0 , PARA ELIMINAR UN ARTICULO INGRESE EL NUMERO DEL ARTICULO : ")
+            #if Escaner_Producto.Validar_Item_ELiminado()!=False:
+else:
+     EscanerValidar_Item_ELiminado   
                 
-                
-                
-                #("Ola_Mundo")
-                #Total_Precio    = Escaner_Producto.Total_Pedido()
-                #print("TOTAL_PRECIO : ",Total_Precio)
-            
+   """             
+
         
     
     
