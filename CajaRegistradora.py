@@ -103,6 +103,16 @@ class Pantalla_Principal:
         print("\n\n\t\t       | G R A C I A S  P O R   S U  C O M P R A | ")
         print("\n\t\t\t\t      *|* \n")
 
+    def Eliminar_Producto(self):
+        print("\n\n\t| E L I M I N A  E L (L O S)  P R O D U C T O (S)  D E  L A  C O M P R A | ")
+        print("\n\t\t\t\t      *|* \n")
+        
+    def Eliminar_Error(self):
+        print("\n\n\t\t   | I N G R E S E  D A T O S  C O R R E C T O S | ")
+        print("\n\t\t\t\t      *|* \n")
+        
+        
+        
 class Cajon:
     def __init__(self,Total_Precio,Dinero_Cliente):
         self.Total_Precio   = Total_Precio
@@ -155,57 +165,38 @@ class Registradora_Caja:
 
 
     def Eliminar_Articulo_Producto(self):
-        os.system ("cls") ; sys.stdout.flush() ; time.sleep(1.5)
+        os.system ("cls") ; sys.stdout.flush() ; time.sleep(0.2)
         Menu = Pantalla_Principal() ; Escaner_Producto =  Escaner(self.Sub_Total,self.Total_Compra) ; Continue="0"
         Menu.Inicio() ; Menu.Articulo_F() ; Menu.Agregado_P() 
-        while Continue!="-1":
-            Stop="0"
-            while Stop!="-1":    
+        while Continue!="-1" or len(Total_Compra)!=0:
+            Stop="0" ; os.system ("cls") ; sys.stdout.flush() ; time.sleep(0.2) 
+            while Stop!="-1" or len(Total_Compra)!=0:
+                Menu.Inicio()
+                Menu.Eliminar_Producto()    
                 Escaner_Producto.Mostrar_Pedido() 
-                self.Total_Precio = 0.0 ; self.Total_Precio = Escaner_Producto.Total_Pedido(self.Total_Precio)
-                Menu.Total(Total_Precio)
-                Stop = input("\n\t\tIngrese El Numero -1 Si No Desea Eliminar Mas Productos : ")
+                self.Total_Precio = 0.0 
+                self.Total_Precio = Escaner_Producto.Total_Pedido(self.Total_Precio)
+                Menu.Total(self.Total_Precio)
+                Eliminar = input("\n\t\tIngrese El Numero Del Articulo Que Desea Eliminar : ")
+                if Escaner_Producto.Validar_Item_ELiminado(Eliminar)==False: 
+                    os.system ("cls") ; Menu.Inicio() ;Menu.Eliminar_Error() ; Menu.Eliminar_Producto() ; Escaner_Producto.Mostrar_Pedido() 
+                    Eliminar = input("\n\t\tIngrese El Numero Del Articulo Que Desea Eliminar : ")
+                else:
+                    Total_Precio = 0.0
+                    Total_Precio = Escaner_Producto.Total_Pedido(Total_Precio)
+                    Stop = "-1"
+            if len(self.Compra_Total)!=0:
+                Continue = input("\n\n\t DESEA ELIMINAR OTRO PRODUCTO(S) DE LA COMPRA, DE LO CONTRARIO INGRESE -1 : ")
+                os.system ("cls")
+            else:
+                print("\n\n\t T O D A  T U  C O M P R A  H A  S I D O  B O R R A D A : ")
+                Continue="-1"
                 
 
 
 
 
-
-"""  
-    def Eliminar_Articulo_Producto(self):
-        
-        os.system ("cls") ; sys.stdout.flush() ; time.sleep(1.5) 
-        Menu.Articulo_F() ; Menu.Agregado_P() ; Escaner_Producto.Mostrar_Pedido()
-
-
-
-
-
-
-
-Menu.Total(Total_Precio)
-Eliminar = input("\n\n\tPARA CONTINUAR INGRESE 0 , PARA ELIMINAR UN ARTICULO INGRESE EL NUMERO DEL ARTICULO : ")
-if Eliminar!="0":
-    if Escaner_Producto.Validar_Item_ELiminado(Eliminar)==False:
-        while Eliminar!="0":
-            Eliminar = input("\n\n\tPARA CONTINUAR INGRESE 0 , PARA ELIMINAR UN ARTICULO INGRESE EL NUMERO DEL ARTICULO : ")
-            if Escaner_Producto.Validar_Item_ELiminado(Eliminar)!=False:
-                Escaner_Producto.Validar_Item_ELiminado(Eliminar)
-                Total_Precio = 0.0
-                Total_Precio = Escaner_Producto.Total_Pedido(Total_Precio)
-                Eliminar = "0"
-    else:
-        Total_Precio = 0.0
-        Total_Precio = Escaner_Producto.Total_Pedido(Total_Precio) 
-else:
-    Total_Precio = 0.0
-    Total_Precio = Escaner_Producto.Total_Pedido(Total_Precio)
-
-os.system ("cls") ; sys.stdout.flush() ; time.sleep(1.5) 
-Menu.Articulo_F() ; Menu.Agregado_P() ; Escaner_Producto.Mostrar_Pedido() ; 
-Dinero = "0"
-
-
+"""
 while Dinero!=0:
     os.system ("cls") 
     Menu.Inicio()
