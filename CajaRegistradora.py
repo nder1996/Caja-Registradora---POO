@@ -8,7 +8,7 @@ class Producto:
         self.Sub_Total    = Sub_Total
         self.Articulo     = Articulo
         self.Compra_Total = Compra_Total
-             
+        
     def Validar_P(self):
         if self.Item!=0 and self.Atributo!="":
             Punto = int(self.Atributo.find("."))
@@ -17,16 +17,15 @@ class Producto:
                     Aux = self.Atributo.replace(".","")
                     if Aux.isdigit()==True:
                         if self.Item==2:
-                            if float(self.Atributo)<=100:
+                            if float(self.Atributo)<=100.0:
                                 return True
-                                sys.exit(0)
-                        else:
+                            if float(self.Atributo)>100.0:
+                                return False
+                        if self.Item==1:
                             return True
-                            sys.exit(0)
         if self.Item == 0 and self.Atributo!="": 
             if self.Atributo.isdigit()==True:
                 return True
-                sys.exit(0)
 
     def Crear_Producto(self):
         Pedido = "\n\n|| {} UNIDADES DE {} TIENE UN DESCUENTO DE {} % \n\n|| SUB-TOTAL A PAGAR ES $ {:.3f} USD".format(self.Articulo[1],self.Articulo[2],self.Articulo[4],float(self.Sub_Total[len(self.Sub_Total)-1]))
@@ -178,30 +177,35 @@ class Registradora_Caja:
     def Eliminar_Articulo_Producto(self):
         os.system ("cls") ; sys.stdout.flush() ; time.sleep(0.2)
         Menu = Pantalla_Principal() ; Escaner_Producto =  Escaner(self.Sub_Total,self.Total_Compra) ; Continue="0"
-        while Continue!="-1" or len(Total_Compra)!=0:
-            Stop="0" ; os.system ("cls") ; sys.stdout.flush() ; time.sleep(0.2) 
-            while Stop!="-1" or len(Total_Compra)!=0:
-                Menu.Inicio()
-                Menu.Eliminar_Producto()    
-                Escaner_Producto.Mostrar_Pedido() 
-                self.Total_Precio = 0.0 
-                self.Total_Precio = Escaner_Producto.Total_Pedido(self.Total_Precio)
-                Menu.Total(self.Total_Precio)
-                Eliminar = input("\n\t\tIngrese El Numero Del Articulo Que Desea Eliminar : ")
-                if Escaner_Producto.Validar_Item_ELiminado(Eliminar)==False: 
-                    os.system ("cls") ; Menu.Inicio() ;Menu.Eliminar_Error() ; Menu.Eliminar_Producto() ; Escaner_Producto.Mostrar_Pedido() 
-                    Eliminar = input("\n\t\tIngrese El Numero Del Articulo Que Desea Eliminar : ")
-                else:
-                    Total_Precio = 0.0
-                    Total_Precio = Escaner_Producto.Total_Pedido(Total_Precio)
-                    Stop = "-1"
-            if len(self.Compra_Total)!=0:
-                Eliminar = input("\n\n\t DESEA ELIMINAR OTRO PRODUCTO(S) DE LA COMPRA, DE LO CONTRARIO INGRESE -1 : ")
-                os.system ("cls")
+        while Continue!="-1":
+            if len(self.Total_Compra)!=0:    
+                Stop="0" ; os.system ("cls") ; sys.stdout.flush() ; time.sleep(0.2) 
+                while Stop!="-1":
+                    if len(self.Total_Compra)!=0:
+                        Menu.Inicio() ; Menu.Eliminar_Producto() ; Escaner_Producto.Mostrar_Pedido() 
+                        self.Total_Precio = 0.0  ; self.Total_Precio = Escaner_Producto.Total_Pedido(self.Total_Precio)
+                        Menu.Total(self.Total_Precio)
+                        Eliminar = input("\n\t\tIngrese El Numero Del Articulo Que Desea Eliminar : ")
+                        if Escaner_Producto.Validar_Item_ELiminado(Eliminar)==False: 
+                            os.system ("cls") ; Menu.Inicio() ;Menu.Eliminar_Error() ; Menu.Eliminar_Producto() ; Escaner_Producto.Mostrar_Pedido() 
+                            Eliminar = input("\n\t\tIngrese El Numero Del Articulo Que Desea Eliminar : ")
+                        else:                
+                            self.Total_Precio = 0.0 ; self.Total_Precio = Escaner_Producto.Total_Pedido(self.Total_Precio)
+                            Stop = "-1"
+                    else:
+                        print("\n\n\t T O D A  T U  C O M P R A  H A  S I D O  B O R R A D A : ")
+                        Stop = "-1"  
+                        Eliminar = input("\n\n\t DESEA ELIMINAR OTRO PRODUCTO(S) DE LA COMPRA, DE LO CONTRARIO INGRESE -1 : ")
+                        os.system ("cls")
             else:
                 print("\n\n\t T O D A  T U  C O M P R A  H A  S I D O  B O R R A D A : ")
-                Continue="-1"
-                time.sleep(1)
+                Continue ="-1"
+                os.system ("cls")
+        if len(self.Total_Compra)==0:
+            print("\n\n\n\n\n\n\n\t\t   T O D A  T U  C O M P R A  H A  S I D O  B O R R A D A   ")
+            Continue ="-1"
+            time.sleep(1.5)
+            os.system ("cls")
 
     def Pagar_Token_Productos(self):
         os.system ("cls") ; sys.stdout.flush() ; time.sleep(0.2) ; self.Total_Precio = 0.0
@@ -238,22 +242,24 @@ if __name__ == "__main__":
     Articulos = [] ; Total_Compra = [] ; Sub_Total = [] ; Total_Precio = 0.0 ; Continuar ="0" ; Opcion="0"
     Registradora = Registradora_Caja(Articulos,Total_Compra,Sub_Total,Total_Precio)
     while Opcion!="-1":
-        os.system ("cls") ; sys.stdout.flush() ; time.sleep(0.2)
+        os.system ("cls") ; sys.stdout.flush() ; time.sleep(1)
         Opcion = Registradora.Principal_Menu()
         if Opcion == "1":
             Registradora.Proceso_Compra()
             os.system ("cls") ; sys.stdout.flush() ; time.sleep(0.2)
-        if Opcion == "2" and len(Total_Compra)!=0:
-            Registradora.Eliminar_Articulo_Producto()
-        else:
-            os.system ("cls") ; print("\n\n\n\n\n\n\n\t  NO HA REALIZADO NINGUNA COMPRA, DEBE COMPRAR PRODUCTOS PARA INGRESAR\n\n\n")
-            os.system("PAUSE")
-        if Opcion == "3" and len(Total_Compra)!=0:
-            Registradora.Pagar_Token_Productos()
-            os.system ("cls") ; sys.stdout.flush() ; time.sleep(0.2)
-        else:
-            os.system ("cls") ; print("\n\n\n\n\n\n\n\t      NO HA REALIZADO NINGUNA COMPRA, DEBE COMPRAR PRODUCTOS PARA INGRESAR\n\n\n")
-            os.system("PAUSE")
+        if Opcion == "2":
+            if len(Total_Compra)!=0:
+                Registradora.Eliminar_Articulo_Producto()
+            else:
+                os.system ("cls") ; print("\n\n\n\n\n\n\n\t  NO HA REALIZADO NINGUNA COMPRA, DEBE COMPRAR PRODUCTOS PARA INGRESAR\n\n\n")
+                os.system("PAUSE")
+        if Opcion == "3":
+            if len(Total_Compra)!=0:
+                Registradora.Pagar_Token_Productos()
+                os.system ("cls") ; sys.stdout.flush() ; time.sleep(0.2)
+            else:
+                os.system ("cls") ; print("\n\n\n\n\n\n\n\t      NO HA REALIZADO NINGUNA COMPRA, DEBE COMPRAR PRODUCTOS PARA INGRESAR\n\n\n")
+                os.system("PAUSE")
         if Opcion == "4":
             sys.exit(1)
         
