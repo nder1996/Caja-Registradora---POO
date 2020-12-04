@@ -17,9 +17,9 @@ class Producto:
                     Aux = self.Atributo.replace(".","")
                     if Aux.isdigit()==True:
                         if self.Item==2:
-                            if float(self.Atributo)<=100.0:
+                            if float(self.Atributo)<100.0:
                                 return True
-                            if float(self.Atributo)>100.0:
+                            else:
                                 return False
                         if self.Item==1:
                             return True
@@ -49,7 +49,7 @@ class Escaner:
     def Total_Pedido(self,Total):
         for i in range(len(self.Sub_Total)):
             Total = Total + float(self.Sub_Total[i])
-        return Total
+        return float(Total)
 
     def Validar_Item_ELiminado(self,Eliminar):
         if Eliminar!="0":
@@ -109,17 +109,25 @@ class Pantalla_Principal:
     def Eliminar_Error(self):
         print("\n\n\t\t   | I N G R E S E  D A T O S  C O R R E C T O S | ")
         print("\n\t\t\t\t      *|* \n")
-         
+    
+    def Compra_Productos(self):
+        print("\n\n\t\t| P A G U E  E L  V A L O R  D E  S U  C O M P R A  | ")
+        print("\n\t\t\t\t      *|* \n")
+        
+    def Pagar_Error(self):
+        print("\n\n\t\t| I N G R E S E   E L  V A L O R  D E  S U  C O M P R A  | ")
+        print("\n\t\t\t\t      *|* \n")
+    
 class Cajon:
     def __init__(self,Total_Precio,Dinero_Cliente):
         self.Total_Precio   = Total_Precio
         self.Dinero_Cliente = Dinero_Cliente
     
     def Pago_Producto(self):
-        if float(self.Dinero_Cliente) >=float(Total_Precio):
-            return float(self.Total_Precio) - float(self.Dinero_Cliente)
+        if self.Total_Precio <= self.Dinero_Cliente:    
+            return self.Total_Precio - self.Dinero_Cliente
         else:
-            return False
+            return False 
     
 class Registradora_Caja:
     def __init__(self,Articulos,Total_Compra,Sub_Total,Total_Precio):
@@ -141,7 +149,7 @@ class Registradora_Caja:
         return Opcion    
 
     def Proceso_Compra(self):
-        Menu = Pantalla_Principal() ; Producto_Cliente = Producto(-1,"",self.Sub_Total,self.Articulos,self.Total_Compra) ; Escaner_Producto =  Escaner(self.Sub_Total,self.Total_Compra) ;Continue="0"
+        Menu = Pantalla_Principal() ; Producto_Cliente = Producto(-1,"",[],[],[]) ; Escaner_Producto =  Escaner([],[]) ;Continue="0"
         while Continue!="-1":   
             Stop="0" ; os.system ("cls") ; sys.stdout.flush() ; time.sleep(0.2) 
             while Stop!="-1":
@@ -152,17 +160,17 @@ class Registradora_Caja:
                 Codigo = input("\n Ingrese El Codigo Del Producto : ")
                 if Codigo=="": Menu.Error_Validar() ; time.sleep(1)
                 else:
-                    N_Unidad  = input("\n Ingrese El Numero De Unidades (Numeros Enteros) Del Producto : ")  ;Producto_Cliente = Producto(0,N_Unidad,self.Sub_Total,self.Articulos,self.Total_Compra)
+                    N_Unidad  = input("\n Ingrese El Numero De Unidades (Numeros Enteros) Del Producto : ")  ;Producto_Cliente = Producto(0,N_Unidad,[],[],[])
                     if Producto_Cliente.Validar_P() !=True: Menu.Error_Validar() ; time.sleep(1)
                     else:
                         Name_Producto = input("\n Ingrese El Nombre Del Producto : ")
                         if Name_Producto=="": Menu.Error_Validar() ; time.sleep(1)
                         else:    
-                            Valor = input("\n Ingrese El Valor Del Producto x Unidad : $ ") ; Producto_Cliente = Producto(1,Valor,self.Sub_Total,self.Articulos,self.Total_Compra) 
+                            Valor = input("\n Ingrese El Valor Del Producto x Unidad : $ ") ; Producto_Cliente = Producto(1,Valor,[],[],[]) 
                             if Producto_Cliente.Validar_P() !=True: Menu.Error_Validar() ; time.sleep(1)
                             else:
-                                Descuento  = input("\n Ingrese El Porcentaje Del Descuento Si Existe : ")  ;Producto_Cliente = Producto(2,Descuento,self.Sub_Total,self.Articulos,self.Total_Compra)
-                                if Producto_Cliente.Validar_P() !=True: Menu.Error_Validar ; time.sleep(1)
+                                Descuento  = input("\n Ingrese El Porcentaje Del Descuento Si Existe : ") ; Producto_Cliente = Producto(2,Descuento,[],[],[])
+                                if Producto_Cliente.Validar_P()==False: Menu.Error_Validar() ; time.sleep(1)
                                 else: 
                                     self.Articulos.append(Codigo) ; self.Articulos.append(N_Unidad) ; self.Articulos.append(Name_Producto) ; self.Articulos.append(Valor) ; self.Articulos.append(Descuento)
                                     self.Sub_Total.append((int(N_Unidad) * float(Valor)) - ((float(Descuento)/100) * (int(N_Unidad) * float(Valor))))
@@ -172,7 +180,6 @@ class Registradora_Caja:
                 Stop = input("\n\t\t Ingrese El Numero -1 Si Desea Terminar El Pedido : ")
             Continue = input("\n\n\t DESEA AGREGAR OTRO PRODUCTO(S) A SU COMPRA, DE LO CONTRARIO INGRESE -1 : ")
         os.system ("cls")
-
 
     def Eliminar_Articulo_Producto(self):
         os.system ("cls") ; sys.stdout.flush() ; time.sleep(0.2)
@@ -208,10 +215,22 @@ class Registradora_Caja:
             os.system ("cls")
 
     def Pagar_Token_Productos(self):
-        os.system ("cls") ; sys.stdout.flush() ; time.sleep(0.2) ; self.Total_Precio = 0.0
-        Menu = Pantalla_Principal() ; Escaner_Producto =  Escaner(self.Sub_Total,self.Total_Compra) ; Continue="0"
-        Menu.Inicio() ; Menu.Agregado_P() ;  Escaner_Producto.Mostrar_Pedido() ; self.Total_Precio = Escaner_Producto.Total_Pedido(self.Total_Precio)
-        Menu.Total(Total_Precio)
+        os.system ("cls") ; sys.stdout.flush() ; time.sleep(0.2) ; self.Total_Precio = 0.0 ; Dinero = ""
+        Menu = Pantalla_Principal()  ; Escaner_Producto =  Escaner(self.Sub_Total,self.Total_Compra) ; Continue="0" ; 
+        Menu.Inicio() ; Menu.Compra_Productos() ;  Escaner_Producto.Mostrar_Pedido() ; self.Total_Precio = Escaner_Producto.Total_Pedido(self.Total_Precio)
+        Menu.Total(self.Total_Precio)
+        Dinero = input("\n\n\tINGRESE LA CANTIDAD DE DINERO CORRESPONDIENDTE USD PARA VALIDAR SU COMRA : $ ")
+        Producto_Validar = Producto(1,Dinero,[],[],[])
+        if Producto_Validar.Validar_P()!=True: Menu.Eliminar_Error() ; time.sleep(1)
+        else:
+            CAJA = Cajon(self.Total_Precio,float(Dinero))
+            if CAJA.Pago_Producto()!=True: Menu.Pagar_Error() ; time.sleep(1)
+            else:
+                print(CAJA.Pago_Producto())
+                print("OLA_MUNDO")
+                time.sleep(100)
+
+
 
 
 
@@ -238,7 +257,7 @@ while Dinero!=0:
     """
     
 if __name__ == "__main__":
-    
+    os.system ("cls")
     Articulos = [] ; Total_Compra = [] ; Sub_Total = [] ; Total_Precio = 0.0 ; Continuar ="0" ; Opcion="0"
     Registradora = Registradora_Caja(Articulos,Total_Compra,Sub_Total,Total_Precio)
     while Opcion!="-1":
