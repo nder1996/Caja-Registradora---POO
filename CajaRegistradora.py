@@ -157,22 +157,22 @@ class Registradora_Caja:
                 else: Menu.Inicio()
                 Menu.Instruccion_P()
                 Codigo = input("\n Ingrese El Codigo Del Producto : ")
-                if Codigo=="": Menu.Error_Validar() ; time.sleep(1)
+                if Codigo=="": Menu.Error_Validar() ; time.sleep(0.5)
                 else:
                     N_Unidad  = input("\n Ingrese El Numero De Unidades (Numeros Enteros) Del Producto : ")                              
                     Producto_Cliente = Producto(0,N_Unidad,[],[],[])
-                    if Producto_Cliente.Validar_P() !=True: Menu.Error_Validar() ; time.sleep(1)
+                    if Producto_Cliente.Validar_P() !=True: Menu.Error_Validar() ; time.sleep(0.5)
                     else:
                         Name_Producto = input("\n Ingrese El Nombre Del Producto : ")
-                        if Name_Producto=="": Menu.Error_Validar() ; time.sleep(1)
+                        if Name_Producto=="": Menu.Error_Validar() ; time.sleep(0.5)
                         else:    
                             Valor = input("\n Ingrese El Valor Del Producto x Unidad : $ ") 
                             Producto_Cliente = Producto(1,Valor,[],[],[]) 
-                            if Producto_Cliente.Validar_P() !=True: Menu.Error_Validar() ; time.sleep(1)
+                            if Producto_Cliente.Validar_P() !=True: Menu.Error_Validar() ; time.sleep(0.5)
                             else:
                                 Descuento  = input("\n Ingrese El Porcentaje Del Descuento Si Existe : ")   
                                 Producto_Cliente = Producto(2,Descuento,[],[],[])
-                                if Producto_Cliente.Validar_P()==False: Menu.Error_Validar() ; time.sleep(1)
+                                if Producto_Cliente.Validar_P()==False: Menu.Error_Validar() ; time.sleep(0.5)
                                 else: 
                                     self.Articulos.append(Codigo) ; self.Articulos.append(N_Unidad) ; self.Articulos.append(Name_Producto) ; self.Articulos.append(Valor) 
                                     self.Articulos.append(Descuento) ; self.Sub_Total.append((int(N_Unidad)*float(Valor))-((float(Descuento)/100)*(int(N_Unidad) * float(Valor))))
@@ -194,21 +194,24 @@ class Registradora_Caja:
                     if len(self.Total_Compra)!=0:
                         self.Total_Precio = 0.0  ; self.Total_Precio = Escaner_Producto.Total_Pedido(self.Total_Precio) ; Menu.Total(self.Total_Precio)
                         Eliminar = input("\n\tIngrese El Numero Del Articulo Que Desea Eliminar , De Lo Contrario Ingrese -1 : ")
+                        if Eliminar=="-1": Stop="-1"
                         if Escaner_Producto.Validar_Item_ELiminado(Eliminar)!=True: 
                             Menu.Inicio() ; Menu.Eliminar_Producto() ; Escaner_Producto.Mostrar_Pedido() ; Menu.Eliminar_Error() 
-                            time.sleep(1) 
-                        else:                
-                            self.Total_Precio = 0.0 ; self.Total_Precio = Escaner_Producto.Total_Pedido(self.Total_Precio)
+                            time.sleep(1)
+                            Stop="0" 
+                        else:                 
+                            os.system ("cls") ; self.Total_Precio = 0.0 ; self.Total_Precio = Escaner_Producto.Total_Pedido(self.Total_Precio)
                             Stop = "-1"
-                if Stop=="-1":
+                if Stop=="-1" and len(self.Total_Compra)!=0:
                     os.system ("cls") ; sys.stdout.flush() ; time.sleep(0.2) 
                     Menu.Inicio() ; Menu.Eliminar_Producto() ; Escaner_Producto.Mostrar_Pedido()
-                    Continue = input("\n\n\t   DESEA ELIMINAR OTRO PRODUCTO(S) DE LA COMPRA, DE LO CONTRARIO INGRESE -1 : ")
-                    Stop="0"
-            if len(self.Total_Compra)==0:
-                print("\n\n\n\n\n\n\n\t\t   T O D A  T U  C O M P R A  H A  S I D O  B O R R A D A   ")
-                Continue ="-1"
-
+                    Stop = input("\n\n\t   DESEA ELIMINAR OTRO PRODUCTO(S) DE LA COMPRA, DE LO CONTRARIO INGRESE -1 : ")
+                    if Stop=="-1": Stop="-1" ; Continue="-1"
+                    else: Continue="0"
+                if len(self.Total_Compra)==0:
+                    print("\n\n\n\n\n\n\n\t\t   T O D A  T U  C O M P R A  H A  S I D O  B O R R A D A   ")
+                    Continue ="-1" ; Stop="-1"
+                    time.sleep(1)
 
 
     def Pagar_Token_Productos(self):
@@ -258,13 +261,14 @@ if __name__ == "__main__":
     Articulos = [] ; Total_Compra = [] ; Sub_Total = [] ; Total_Precio = 0.0 ; Continuar ="0" ; Opcion="0"
     Registradora = Registradora_Caja(Articulos,Total_Compra,Sub_Total,Total_Precio)
     while Opcion!="-1":
-        os.system ("cls") ; sys.stdout.flush() ; time.sleep(1)
+        os.system ("cls") ; sys.stdout.flush() ; time.sleep(0.5)
         Opcion = Registradora.Principal_Menu()
         if Opcion == "1":
+            os.system ("cls")
             Registradora.Proceso_Compra()
-            os.system ("cls") ; sys.stdout.flush() ; time.sleep(0.2)
         if Opcion == "2":
             if len(Total_Compra)!=0:
+                os.system ("cls")
                 Registradora.Eliminar_Articulo_Producto()
             else:
                 os.system ("cls") ; print("\n\n\n\n\n\n\n\t  NO HA REALIZADO NINGUNA COMPRA, DEBE COMPRAR PRODUCTOS PARA INGRESAR\n\n\n")
