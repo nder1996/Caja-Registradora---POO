@@ -28,9 +28,13 @@ class Producto:
                 return True
 
     def Crear_Producto(self):
-        Pedido = "\n\n|| {} UNIDADES DE {} TIENE UN DESCUENTO DE {} % \n\n|| SUB-TOTAL A PAGAR ES $ {:.3f} USD".format(self.Articulo[1],self.Articulo[2],self.Articulo[4],float(self.Sub_Total[len(self.Sub_Total)-1]))
-        self.Compra_Total.append(Pedido)
-        self.Articulo.clear()
+        SubTotal = len(self.Sub_Total) - 1
+        if SubTotal==len(self.Compra_Total):
+            Pedido = "\n\n|| {} UNIDADES DE {} TIENE UN DESCUENTO DE {} % \n\n|| SUB-TOTAL A PAGAR ES $ {:.3f} USD".format(self.Articulo[1],self.Articulo[2],self.Articulo[4],float(self.Sub_Total[len(self.Sub_Total)-1]))
+            self.Compra_Total.append(Pedido)
+            self.Articulo.clear()
+        else:
+            return None
 
 class Escaner:
     def __init__(self,Sub_Total,Compra_Total):
@@ -124,7 +128,8 @@ class Cajon:
     
     def Pago_Producto(self):
         if self.Total_Precio <= self.Dinero_Cliente:    
-            return self.Total_Precio - self.Dinero_Cliente
+            Volver =  self.Total_Precio - self.Dinero_Cliente
+            return (Volver)*(-1)
         if self.Total_Precio > self.Dinero_Cliente:
             return False 
     
@@ -176,8 +181,8 @@ class Registradora_Caja:
                                 if Producto_Cliente.Validar_P()==False: Menu.Error_Validar() ; time.sleep(0.5)
                                 else: 
                                     self.Articulos.append(Codigo) ; self.Articulos.append(N_Unidad) ; self.Articulos.append(Name_Producto) ; self.Articulos.append(Valor) 
-                                    self.Articulos.append(Descuento) ; self.Sub_Total.append((int(N_Unidad)*float(Valor))-((float(Descuento)/100)*(int(N_Unidad) * float(Valor))))
-                                    Producto_Cliente = Producto(-1,"",self.Sub_Total,self.Articulos,self.Total_Compra)
+                                    self.Articulos.append(Descuento) ; #self.Sub_Total.append()
+                                    Producto_Cliente = Producto(-1,(int(N_Unidad)*float(Valor))-((float(Descuento)/100)*(int(N_Unidad) * float(Valor))),self.Sub_Total,self.Articulos,self.Total_Compra)
                                     Producto_Cliente.Crear_Producto() ; Escaner_Producto =  Escaner(self.Sub_Total,self.Total_Compra)
                                     self.Total_Precio = 0.0 ; self.Total_Precio = Escaner_Producto.Total_Pedido(self.Total_Precio) 
                 Stop = input("\n\t\t Ingrese El Numero -1 Si Desea Terminar El Pedido : ")
