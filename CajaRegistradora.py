@@ -79,29 +79,29 @@ class Escaner:
 
 class Pantalla_Principal:
     
-    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
+    #@unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
     def Inicio(self):
         print("\n")
         print("\n\n\t\t\t|***|  CAJA REGISTRADORA  |***|")
         print("\t\t\t|***|         V2.0        |***|")
         print("\n\n")
     
-    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA")     
+    #@unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA")     
     def Instruccion_P(self):
         print("\n\n\t   | I N G R E S A  L O S   D A T O S  D E  L A  C O M P R A | \n")
         print("\t\t\t\t      *|* \n")         
     
-    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
+    #@unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
     def Error_Validar(self):
         print("\n\n\n\t     | P O R  F A V O R  I N G R E S E  U N  P R O D U C T O  V A L I D O |")
         print("\n\t\t\t\t      *|* \n")  
 
-    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
+    #@unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
     def Articulo_F(self):
         print("\n\n\t\t       |P E D I D O  F I N A L I Z A D O| ")
         print("\n\t\t\t\t      *|* \n")
     
-    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
+    #@unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
     def Agregado_P(self):
         print("\n\t\t    | P R O D U C T O S  A G R E G A DO S |")
         print("\n\n")
@@ -113,32 +113,32 @@ class Pantalla_Principal:
         else:
             return None
     
-    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
+    #@unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
     def Finalizada_Compra(self):
         print("\n\n\t\t       | P A G O  F I N A L I Z A D O | ")
         print("\n\t\t\t\t      *|* \n")
     
-    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA")     
+    #@unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA")     
     def Gracias_Compra(self):
         print("\n\n\t\t       | G R A C I A S  P O R   S U  C O M P R A | ")
         print("\n\t\t\t\t      *|* \n")
 
-    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
+    #@unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
     def Eliminar_Producto(self):
         print("\n\n\t| E L I M I N A  E L (L O S)  P R O D U C T O (S)  D E  L A  C O M P R A | ")
         print("\n\t\t\t\t      *|* \n")
     
-    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA")     
+    #@unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA")     
     def Eliminar_Error(self):
         print("\n\n\t\t   | I N G R E S E  D A T O S  C O R R E C T O S | ")
         print("\n\t\t\t\t      *|* \n")
     
-    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
+    #@unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
     def Compra_Productos(self):
         print("\n\n\t\t| P A G U E  E L  V A L O R  D E  S U  C O M P R A  | ")
         print("\n\t\t\t\t      *|* \n")
     
-    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA")     
+    #Caja@unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA")     
     def Pagar_Error(self):
         print("\n\n\t\t| I N G R E S E   E L  V A L O R  D E  S U  C O M P R A  | ")
         print("\n\t\t\t\t      *|* \n")
@@ -162,7 +162,7 @@ class Registradora_Caja:
         self.Sub_Total     = Sub_Total
         self.Total_Precio  = Total_Precio
 
-    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
+    #@unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
     def Principal_Menu(self):
         Menu = Pantalla_Principal()
         Menu.Inicio()
@@ -175,7 +175,7 @@ class Registradora_Caja:
         Opcion = input("\t\tIngrese El Numero Correspondiente Para Continuar : ")
         return Opcion    
     
-    @unittest.skip("Esta Porcion de codigo es una combinacion de Clases que ya se les hizo el test con anterioridad") 
+    #@unittest.skip("Esta Porcion de codigo es una combinacion de Clases que ya se les hizo el test con anterioridad") 
     def Proceso_Compra(self):
         Menu = Pantalla_Principal() ; Producto_Cliente = Producto(-1,"",[],[],[]) ; Stop="0" ; Escaner_Producto =  Escaner([],[]) ;Continue="0"
         while Continue!="-1":   
@@ -213,7 +213,7 @@ class Registradora_Caja:
             Continue = input("\n\n\t DESEA AGREGAR OTRO PRODUCTO(S) A SU COMPRA, DE LO CONTRARIO INGRESE -1 : ")
         os.system ("cls")
 
-    @unittest.skip("Esta Porcion de codigo es una combinacion de Clases que ya se les hizo el test con anterioridad")
+    #@unittest.skip("Esta Porcion de codigo es una combinacion de Clases que ya se les hizo el test con anterioridad")
     def Eliminar_Articulo_Producto(self):
         sys.stdout.flush() ; time.sleep(0.2) ; Menu = Pantalla_Principal() ; Escaner_Producto =  Escaner(self.Sub_Total,self.Total_Compra) ; Continue="0" ; Stop="0"
         while Continue!="-1":
@@ -242,7 +242,7 @@ class Registradora_Caja:
                 time.sleep(1.5)
                 break    
                 
-    @unittest.skip("Esta Porcion de codigo es una combinacion de Clases que ya se les hizo el test con anterioridad")
+    #@unittest.skip("Esta Porcion de codigo es una combinacion de Clases que ya se les hizo el test con anterioridad")
     def Pagar_Token_Productos(self):
         self.Total_Precio = 0.0 ; Dinero = "" ; Stop="0"
         Menu = Pantalla_Principal()  ; Escaner_Producto =  Escaner(self.Sub_Total,self.Total_Compra)  
