@@ -30,6 +30,7 @@ class Producto:
     def Crear_Producto(self):
         self.Sub_Total.append(self.Atributo)
         SubTotal = len(self.Sub_Total) - 1
+        print("SUBTOTAL : ",SubTotal," COMPRA : ",len(self.Compra_Total))
         if SubTotal==len(self.Compra_Total):
             Pedido = "\n\n|| {} UNIDADES DE {} TIENE UN DESCUENTO DE {} % \n\n|| SUB-TOTAL A PAGAR ES $ {:.3f} USD".format(self.Articulo[1],self.Articulo[2],self.Articulo[4],float(self.Sub_Total[len(self.Sub_Total)-1]))
             self.Compra_Total.append(Pedido)
