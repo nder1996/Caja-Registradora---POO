@@ -162,6 +162,7 @@ class Registradora_Caja:
         self.Sub_Total     = Sub_Total
         self.Total_Precio  = Total_Precio
 
+    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
     def Principal_Menu(self):
         Menu = Pantalla_Principal()
         Menu.Inicio()
@@ -173,7 +174,8 @@ class Registradora_Caja:
         print ("\n")
         Opcion = input("\t\tIngrese El Numero Correspondiente Para Continuar : ")
         return Opcion    
-
+    
+    @unittest.skip("Esta Porcion de codigo es una combinacion de Clases que ya se les hizo el test con anterioridad") 
     def Proceso_Compra(self):
         Menu = Pantalla_Principal() ; Producto_Cliente = Producto(-1,"",[],[],[]) ; Stop="0" ; Escaner_Producto =  Escaner([],[]) ;Continue="0"
         while Continue!="-1":   
@@ -211,6 +213,7 @@ class Registradora_Caja:
             Continue = input("\n\n\t DESEA AGREGAR OTRO PRODUCTO(S) A SU COMPRA, DE LO CONTRARIO INGRESE -1 : ")
         os.system ("cls")
 
+    @unittest.skip("Esta Porcion de codigo es una combinacion de Clases que ya se les hizo el test con anterioridad")
     def Eliminar_Articulo_Producto(self):
         sys.stdout.flush() ; time.sleep(0.2) ; Menu = Pantalla_Principal() ; Escaner_Producto =  Escaner(self.Sub_Total,self.Total_Compra) ; Continue="0" ; Stop="0"
         while Continue!="-1":
@@ -239,7 +242,7 @@ class Registradora_Caja:
                 time.sleep(1.5)
                 break    
                 
-    
+    @unittest.skip("Esta Porcion de codigo es una combinacion de Clases que ya se les hizo el test con anterioridad")
     def Pagar_Token_Productos(self):
         self.Total_Precio = 0.0 ; Dinero = "" ; Stop="0"
         Menu = Pantalla_Principal()  ; Escaner_Producto =  Escaner(self.Sub_Total,self.Total_Compra)  
