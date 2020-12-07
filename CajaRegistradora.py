@@ -30,7 +30,6 @@ class Producto:
     def Crear_Producto(self):
         self.Sub_Total.append(self.Atributo)
         SubTotal = len(self.Sub_Total) - 1
-        print("SUBTOTAL : ",SubTotal," COMPRA : ",len(self.Compra_Total))
         if SubTotal==len(self.Compra_Total):
             Pedido = "\n\n|| {} UNIDADES DE {} TIENE UN DESCUENTO DE {} % \n\n|| SUB-TOTAL A PAGAR ES $ {:.3f} USD".format(self.Articulo[1],self.Articulo[2],self.Articulo[4],float(self.Sub_Total[len(self.Sub_Total)-1]))
             self.Compra_Total.append(Pedido)
@@ -45,17 +44,23 @@ class Escaner:
         
     def Mostrar_Pedido(self):
         Contador = 0
-        for i in self.Compra_Total:
-            Contador+=1
-            print("\n\n\t\t\t   °°°°°°°°°°°°°°°°°°°°°°°°")
-            print("\t\t\t        ARTICULO : ",Contador)
-            print("\t\t\t   °°°°°°°°°°°°°°°°°°°°°°°°")
-            print(i)
+        if len(self.Compra_Total)!=0:
+            for i in self.Compra_Total:
+                Contador+=1
+                print("\n\n\t\t\t   °°°°°°°°°°°°°°°°°°°°°°°°")
+                print("\t\t\t        ARTICULO : ",Contador)
+                print("\t\t\t   °°°°°°°°°°°°°°°°°°°°°°°°")
+                print(i)
+        else:
+            return None
             
     def Total_Pedido(self,Total):
-        for i in range(len(self.Sub_Total)):
-            Total = Total + float(self.Sub_Total[i])
-        return float(Total)
+        if len(self.Compra_Total)!=0:
+            for i in range(len(self.Sub_Total)):
+                Total = Total + float(self.Sub_Total[i])
+            return float(Total)
+        else:
+            return None
 
     def Validar_Item_ELiminado(self,Eliminar):
         if Eliminar!="0"  or  Eliminar!="-1":

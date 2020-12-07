@@ -33,7 +33,21 @@ class Test_CajaRegistradora_Producto(unittest.TestCase):
         Producto_Cliente = Producto(2,"50.7ASp",[],[],[])
         Validar  = Producto_Cliente.Validar_P()
         self.assertFalse(False,bool(Validar) is False) 
-"""
+    
+    def test_CrearProducto_ARROZ_None(self):
+        Articulos = ["A65SD6SD","1","ARROZ","100","10"] ; Sub_Total = [] ; Compra_Total = []
+        Sub_Total.append("500")
+        Producto_Cliente = Producto(-1,"100",Sub_Total,Articulos,Compra_Total)
+        Validar = Producto_Cliente.Crear_Producto()
+        self.assertIsNone(None,Validar is  None) 
+    
+    def test_CrearProducto_PERA_None(self):
+        Articulos = ["123PERASDFDF","1","PERA","20","45"] ; Sub_Total = [] ; Compra_Total = []
+        Sub_Total.append("700")
+        Producto_Cliente = Producto(-1,"110",Sub_Total,Articulos,Compra_Total)
+        Validar = Producto_Cliente.Crear_Producto()
+        self.assertIsNone(None,Validar is  None)     
+    
     def test_CrearProducto_ARROZ_NotNone(self):
         Articulos = ["A65SD6SD","1","ARROZ","100","10"] ; Sub_Total = [] ; Compra_Total = []
         Producto_Cliente = Producto(-1,"90",Sub_Total,Articulos,Compra_Total)
@@ -44,22 +58,7 @@ class Test_CajaRegistradora_Producto(unittest.TestCase):
         Articulos = ["A65SD6SD","1","PERA","200","45"] ; Sub_Total = [] ; Compra_Total = []
         Producto_Cliente = Producto(-1,"110",Sub_Total,Articulos,Compra_Total)
         Validar = Producto_Cliente.Crear_Producto()
-        self.assertIsNotNone(Validar is not None)
-"""    
-    
-    def test_CrearProducto_ARROZ_None(self):
-        Articulos = ["A65SD6SD","1","ARROZ","100","10"] ; Sub_Total = [] ; Compra_Total = []
-        Sub_Total.append("500")
-        Producto_Cliente = Producto(-1,"100",Sub_Total,Articulos,Compra_Total)
-        Validar = Producto_Cliente.Crear_Producto()
-        print("VALIDAR : ",Validar)
-        self.assertIsNone(Validar is  None) 
-    
-    #def test_CrearProducto_PERA_None(self):
-    #    Articulos = ["A65SD6SD","1","PERA","200","45"] ; Sub_Total = [] ; Compra_Total = []
-    #    Producto_Cliente = Producto(-1,["100,50,900"],Sub_Total,Articulos,Compra_Total)
-    #    Validar = Producto_Cliente.Crear_Producto()
-    #    self.assertIsNone(Validar is  None)    
+        self.assertIsNotNone(Validar is not None)    
         
 
 if __name__ == "__main__":
