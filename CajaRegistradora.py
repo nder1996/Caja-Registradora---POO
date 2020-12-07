@@ -175,7 +175,6 @@ class Registradora_Caja:
         Opcion = input("\t\tIngrese El Numero Correspondiente Para Continuar : ")
         return Opcion    
     
-    #@unittest.skip("Esta Porcion de codigo es una combinacion de Clases que ya se les hizo el test con anterioridad") 
     def Proceso_Compra(self):
         Menu = Pantalla_Principal() ; Producto_Cliente = Producto(-1,"",[],[],[]) ; Stop="0" ; Escaner_Producto =  Escaner([],[]) ;Continue="0"
         while Continue!="-1":   

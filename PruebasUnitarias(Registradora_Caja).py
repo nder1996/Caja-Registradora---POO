@@ -2,9 +2,11 @@ from CajaRegistradora import Cajon
 import string , unittest
 
 
-class Test_CajaRegistradora_Pantalla_Principal(unittest.TestCase):
 
 
+"""
+#@unittest.skip("Esta Porcion de codigo es una combinacion de Clases que ya se les hizo el test con anterioridad") 
+"""
 
 
 
