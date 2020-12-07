@@ -1,4 +1,4 @@
-import string , time , sys , os 
+import string , time , sys , os , unittest
 
 
 class Producto:
@@ -78,52 +78,67 @@ class Escaner:
             return False
 
 class Pantalla_Principal:
+    
+    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
     def Inicio(self):
         print("\n")
         print("\n\n\t\t\t|***|  CAJA REGISTRADORA  |***|")
         print("\t\t\t|***|         V2.0        |***|")
         print("\n\n")
-        
+    
+    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA")     
     def Instruccion_P(self):
         print("\n\n\t   | I N G R E S A  L O S   D A T O S  D E  L A  C O M P R A | \n")
         print("\t\t\t\t      *|* \n")         
     
+    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
     def Error_Validar(self):
         print("\n\n\n\t     | P O R  F A V O R  I N G R E S E  U N  P R O D U C T O  V A L I D O |")
         print("\n\t\t\t\t      *|* \n")  
 
+    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
     def Articulo_F(self):
         print("\n\n\t\t       |P E D I D O  F I N A L I Z A D O| ")
         print("\n\t\t\t\t      *|* \n")
     
+    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
     def Agregado_P(self):
         print("\n\t\t    | P R O D U C T O S  A G R E G A DO S |")
         print("\n\n")
         
     def Total(self,Total):
-        print("\n\n\t\t\t  | TOTAL : $ {:.3f} USD |\n".format(float(Total)))
-        print("\n\n")
+        if float(Total)!=0.0:
+            print("\n\n\t\t\t  | TOTAL : $ {:.3f} USD |\n".format(float(Total)))
+            print("\n\n")
+        else:
+            return None
     
+    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
     def Finalizada_Compra(self):
         print("\n\n\t\t       | P A G O  F I N A L I Z A D O | ")
         print("\n\t\t\t\t      *|* \n")
-        
+    
+    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA")     
     def Gracias_Compra(self):
         print("\n\n\t\t       | G R A C I A S  P O R   S U  C O M P R A | ")
         print("\n\t\t\t\t      *|* \n")
 
+    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
     def Eliminar_Producto(self):
         print("\n\n\t| E L I M I N A  E L (L O S)  P R O D U C T O (S)  D E  L A  C O M P R A | ")
         print("\n\t\t\t\t      *|* \n")
-        
+    
+    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA")     
     def Eliminar_Error(self):
         print("\n\n\t\t   | I N G R E S E  D A T O S  C O R R E C T O S | ")
         print("\n\t\t\t\t      *|* \n")
     
+    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA") 
     def Compra_Productos(self):
         print("\n\n\t\t| P A G U E  E L  V A L O R  D E  S U  C O M P R A  | ")
         print("\n\t\t\t\t      *|* \n")
-        
+    
+    @unittest.skip("SOLO ES DECORACION PARA EL PROGRAMA")     
     def Pagar_Error(self):
         print("\n\n\t\t| I N G R E S E   E L  V A L O R  D E  S U  C O M P R A  | ")
         print("\n\t\t\t\t      *|* \n")
@@ -138,7 +153,7 @@ class Cajon:
             Volver =  self.Total_Precio - self.Dinero_Cliente
             return (Volver)*(-1)
         if self.Total_Precio > self.Dinero_Cliente:
-            return False 
+            return None 
     
 class Registradora_Caja:
     def __init__(self,Articulos,Total_Compra,Sub_Total,Total_Precio):
@@ -236,7 +251,7 @@ class Registradora_Caja:
             if Producto_Validar.Validar_P()!=True: Menu.Eliminar_Error() ; time.sleep(1)
             else:
                 CAJA = Cajon(self.Total_Precio,float(Dinero))
-                if CAJA.Pago_Producto()==False: Menu.Pagar_Error() ; time.sleep(1)
+                if CAJA.Pago_Producto()==None: Menu.Pagar_Error() ; time.sleep(1)
                 else:
                     os.system ("cls") ; Menu.Inicio() ; Menu.Gracias_Compra()
                     print("\n\n\t\t\t| A DEVOLVER : $ {:.3f} USD |\n".format(CAJA.Pago_Producto()))

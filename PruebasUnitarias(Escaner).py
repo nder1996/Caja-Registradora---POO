@@ -10,15 +10,29 @@ class Test_CajaRegistradora_Escaner(unittest.TestCase):
         self.Escaner_P =Escaner(Sub_Total,Compra_Total) 
     
     def test_MostrarPedido_IsNotNone(self):
-        self.assertIsNotNone(self.Escaner_P.Mostrar_Pedido() is not None) 
+        self.assertIsNotNone(self.Escaner_P.Mostrar_Pedido() is not None)
+        
+    def test_MostrarPedido_IsNone(self):
+        Compra_Total = [] ; Sub_Total = [] ; self.Escaner_P = Escaner(Sub_Total,Compra_Total) 
+        self.assertIsNone(None,self.Escaner_P.Mostrar_Pedido() is  None) 
 
     def test_TotalPedido_IsNotNone(self):
         Total = 0.0
         self.assertIsNotNone(self.Escaner_P.Total_Pedido(Total) is not None) 
+    
+    def test_TotalPedido_IsNone(self):
+        Compra_Total = [] ; Sub_Total = [] ; self.Escaner_P = Escaner(Sub_Total,Compra_Total)  ; Total = 0.0
+        self.assertIsNone(None,self.Escaner_P.Total_Pedido(Total) is  None) 
 
-    def test_EliminarArticulo_IsNotNone(self):
-        Total = 0.0
-        self.assertIsNotNone(self.Escaner_P.Total_Pedido(Total) is not None) 
+    def test_EliminarArticulo_True(self):
+        self.assertTrue(True,bool (self.Escaner_P.Validar_Item_ELiminado("1")) is True )
+
+    def test_EliminarArticulo_False(self):
+        self.assertFalse(False,bool (self.Escaner_P.Validar_Item_ELiminado("1")) is False )
+
+
+
+
 
 
 
