@@ -28,6 +28,7 @@ class Producto:
                 return True
 
     def Crear_Producto(self):
+        self.Sub_Total.append(self.Atributo)
         SubTotal = len(self.Sub_Total) - 1
         if SubTotal==len(self.Compra_Total):
             Pedido = "\n\n|| {} UNIDADES DE {} TIENE UN DESCUENTO DE {} % \n\n|| SUB-TOTAL A PAGAR ES $ {:.3f} USD".format(self.Articulo[1],self.Articulo[2],self.Articulo[4],float(self.Sub_Total[len(self.Sub_Total)-1]))
@@ -182,7 +183,7 @@ class Registradora_Caja:
                                 else: 
                                     self.Articulos.append(Codigo) ; self.Articulos.append(N_Unidad) ; self.Articulos.append(Name_Producto) ; self.Articulos.append(Valor) 
                                     self.Articulos.append(Descuento) ; #self.Sub_Total.append()
-                                    Producto_Cliente = Producto(-1,(int(N_Unidad)*float(Valor))-((float(Descuento)/100)*(int(N_Unidad) * float(Valor))),self.Sub_Total,self.Articulos,self.Total_Compra)
+                                    Producto_Cliente = Producto(-1,str((int(N_Unidad)*float(Valor))-((float(Descuento)/100)*(int(N_Unidad) * float(Valor)))),self.Sub_Total,self.Articulos,self.Total_Compra)
                                     Producto_Cliente.Crear_Producto() ; Escaner_Producto =  Escaner(self.Sub_Total,self.Total_Compra)
                                     self.Total_Precio = 0.0 ; self.Total_Precio = Escaner_Producto.Total_Pedido(self.Total_Precio) 
                 Stop = input("\n\t\t Ingrese El Numero -1 Si Desea Terminar El Pedido : ")

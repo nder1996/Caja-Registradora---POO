@@ -29,16 +29,24 @@ class Test_CajaRegistradora_Producto(unittest.TestCase):
         Validar  = Producto_Cliente.Validar_P()
         self.assertTrue(True,bool(Validar) is True) 
 
-
     def test_Validar_Valor_False(self):
         Producto_Cliente = Producto(2,"50.7ASp",[],[],[])
         Validar  = Producto_Cliente.Validar_P()
         self.assertFalse(False,bool(Validar) is False) 
 
+    def test_CrearProducto_ARROZ_NotNone(self):
+        Articulos = ["A65SD6SD","1","ARROZ","100","10"] ; Sub_Total = [] ; Compra_Total = []
+        Producto_Cliente = Producto(-1,"90",Sub_Total,Articulos,Compra_Total)
+        Validar = Producto_Cliente.Crear_Producto()
+        self.assertIsNotNone(Validar is not None) 
 
-
-
-
+    def test_CrearProducto_PERA_NotNone(self):    
+        Articulo = ["ASDADS45Da","1","PERA","100","10"] ; SubTotal = [] ; CompraTotal = []
+        Producto_Cliente = Producto(-1,"90",SubTotal,Articulo,CompraTotal)
+        Validar = Producto_Cliente.Crear_Producto()
+        self.assertIsNotNone(Validar is not None) 
+        #print("HOLA MUNDO")
+        
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(exit=False)
